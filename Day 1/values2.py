@@ -1,45 +1,37 @@
-import re
-
-def sum_written_numbers(big_string):
-
-    words = big_string.split(" ")
-
-    number_words = {
-        "one": 1,
-        "two": 2,
-        "three": 3,
-        "four": 4,
-        "five": 5,
-        "six": 6,
-        "seven": 7,
-        "eight": 8,
-        "nine": 9
-    }
-
-    pattern = '|'.join(re.escape(word) for word in number_words.keys())
-
-    words = big_string.split()
-    print(words)
-    total_sum = 0
-
-    for word in words:
-        print(word)
-        number_values = []
-
-        for match in re.finditer(pattern, word):
-            number_word = match.group()
-            number_values.append(number_words[number_word])
-            print(number_values)
-
-        if number_values:
-            # Form a two-digit number from the first and last values
-            two_digit_number = int(number_values[0] + number_values[-1])
-            total_sum += two_digit_number
-
-    return total_sum
+DIGITS_MAP = {
+    "oneight": "18",
+    "twone": "21",
+    "threeight": "38",
+    "fiveight": "58",
+    "sevenine": "79",
+    "eightwo": "82",
+    "eighthree": "83",
+    "nineight": "98",
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "five": "5",
+    "six": "6",
+    "seven": "7",
+    "eight": "8",
+    "nine": "9"
+}
 
 
-giant_list = """two934seven1
+def extract_digits(line: str) -> int:
+    for digit in DIGITS_MAP:
+        line = line.replace(digit, DIGITS_MAP[digit])
+    digits = [s for s in line if s.isnumeric()]
+    return int(digits[0] + digits[-1])
+
+
+def main(iput_data):
+    digits = [extract_digits(l) for l in input_data.split()]
+    print(f"Sum is {sum(digits)}")
+
+
+input_data = """two934seven1
 8825eightknfv
 sevenoneqbfzntsix55
 foursqpqvv192rdrbtcccfourone
@@ -1040,6 +1032,5 @@ fiveninebtpbpjqbgx2bmjrgmprnd
 sixgtxr2fourrdkjg
 fivebxsevensixone872dlx"""
 
-results = sum_written_numbers(giant_list)
 
-print(results)
+main(input_data)

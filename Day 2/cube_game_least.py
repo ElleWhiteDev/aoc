@@ -2,8 +2,8 @@ import re
 
 
 def report_smallest(numbers, color):
-    smallest = min(numbers) if numbers else None
-    print(f"Smallest number for {color}: {smallest}")
+    smallest = max(numbers) if numbers else None
+    print(f"Largest number for {color}: {smallest}")
     return smallest
 
 
@@ -20,14 +20,14 @@ def find_least_cubes(line):
         print(f"Numbers found for {color}: {matches}")
         color_lists[color].extend(int(num) for num in matches)
 
-    smallest_values = [report_smallest(
+    largest_values = [report_smallest(
         color_lists[color], color) for color in color_lists]
-    if None in smallest_values:
+    if None in largest_values:
         print("Missing a color. Skipping this line.")
         return 0
 
     product = 1
-    for value in smallest_values:
+    for value in largest_values:
         product *= value
     print(f"Product for this line: {product}")
 
